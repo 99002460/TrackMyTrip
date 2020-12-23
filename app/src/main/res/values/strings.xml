@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">TrackMyTrip</string>
+    <string name="textview">TextView</string>
+    <string name="type_here">Type Here</string>
+    <string name="done">Done</string>
+
+</resources>
