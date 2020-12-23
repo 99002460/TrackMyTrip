@@ -123,7 +123,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         stopButton = findViewById(R.id.stop);
         showTrips = findViewById(R.id.tripsDB);
         imageButton = findViewById(R.id.imageButton);
-        getCurrentLocation();
+
+        getFirstLocation();
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -354,6 +355,42 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                             latitude = location.getLatitude();
                             longitude = location.getLongitude();
                             velocity = location.getSpeed();
+
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    private void getFirstLocation() {
+        //Initialize Task Location
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        Task<Location> task = client.getLastLocation();
+        task.addOnSuccessListener(new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                if (location != null) {
+                    supportMapFragment.getMapAsync(new OnMapReadyCallback() {
+                        @Override
+                        public void onMapReady(GoogleMap googleMap) {
+
+                            latlng = new LatLng(location.getLatitude(), location.getLongitude());
+                            latitude = location.getLatitude();
+                            longitude = location.getLongitude();
+                            velocity = location.getSpeed();
+
+                            // Creating a marker
+                            MarkerOptions options = new MarkerOptions()
+                                    .position(latlng)
+                                    .icon(bitmapDescriptorFromVector(getApplicationContext(), R.drawable.icon_marker));
+
+                            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng, 19));
+
+                            googleMap.addMarker(options);
 
                         }
                     });
