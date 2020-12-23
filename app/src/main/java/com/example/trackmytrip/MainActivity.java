@@ -129,8 +129,13 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onClick(View view) {
                 mMap.clear();
-                getCurrentLocation();
-                addMarkerLive(latlng);
+                if (latlng == null){
+                    Toast.makeText(getApplicationContext(),"Awaiting Location!",Toast.LENGTH_SHORT).show();
+                    getCurrentLocation();
+                }else {
+                    getCurrentLocation();
+                    addMarkerLive(latlng);
+                }
 
             }
         });

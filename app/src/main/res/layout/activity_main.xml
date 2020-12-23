@@ -20,7 +20,8 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="24dp"
         android:background="@drawable/draw"
-        android:text="start" />
+        android:text="start"
+        android:layout_marginRight="8dp" />
 
     <Button
         android:id="@+id/stop"
